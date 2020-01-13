@@ -1,0 +1,43 @@
+pip install qiskit
+
+# begin with importing essential libraries for IBM Q
+from qiskit import IBMQ, BasicAer
+from qiskit import ClassicalRegister, QuantumRegister, QuantumCircuit
+
+# set up Quantum Register and Classical Register for 3 qubits
+q = QuantumRegister(3)
+c = ClassicalRegister(3)
+# Create a Quantum Circuit
+qc = QuantumCircuit(q, c)
+qc.h(q)
+qc.measure(q, c)
+
+qc.draw()
+
+def answer(result):
+    for key in result.keys():
+        state = key
+    print('The 8 Sided Dice Rolled:')
+    if state == '000':
+        print('One')
+    elif state == '001':
+        print('Two')
+    elif state == '010':
+        print('Three')
+    elif state == '011':
+        print('Four')
+    elif state == '100':
+        print("Five")
+    elif state == '101':
+        print('Six')
+    elif state == '110':
+        print('Seven')
+    elif state == '111':
+        print('Eight')
+    else:
+        print('Roll Again!!')
+        
+from qiskit import execute
+job = execute(qc, backend=BasicAer.get_backend('qasm_simulator'), shots=1)
+result = job.result().get_counts(qc)
+answer(result)
